@@ -1,4 +1,5 @@
 import React from 'react';
+import AddComment from '../../Component/AddComment/AddComment';
 
 const PostDetails = () => {
     return (
@@ -10,6 +11,7 @@ const PostDetails = () => {
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis voluptatibus nisi expedita eum autem dignissimos cupiditate saepe modi quidem sequi?Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis voluptatibus nisi expedita eum autem dignissimos cupiditate saepe modi quidem sequi?Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis voluptatibus nisi expedita eum autem dignissimos cupiditate saepe modi quidem sequi?</p>
                 </div>
             </div>
+            <AddComment></AddComment>
         </div>
     );
 };

@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProvider';
-import { BeakerIcon, HeartIcon } from '@heroicons/react/24/solid'
+import { BeakerIcon, HeartIcon, ShareIcon } from '@heroicons/react/24/solid'
+import AddComment from '../../../Component/AddComment/AddComment';
 const NewsFeedCard = () => {
     const { user } = useContext(AuthContext)
     return (
@@ -22,10 +23,12 @@ const NewsFeedCard = () => {
                 </div>
 
                 <div className='mt-3 flex gap-2'>
+
                     <HeartIcon className=" h-6 w-6 text-red-500" />
                     <small>99</small>
                 </div>
             </div>
+            <AddComment></AddComment>
         </div>
     );
 };

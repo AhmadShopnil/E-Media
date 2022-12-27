@@ -15,8 +15,8 @@ const PostArea = () => {
             <div className='flex justify-center gap-6 '>
                 <form onSubmit={handleAddPost}>
                     <div className='flex items-center gap-4'>
-                        <textarea name='text' className="textarea textarea-info" placeholder="What's in your mind ?"></textarea>
-                        <input type="file" className="file-input file-input-bordered file-input-xs file-input-info w-90% max-w-xs" />
+                        <textarea name='text' className="textarea textarea-info h-14" placeholder="What's in your mind ?"></textarea>
+                        <input type="file" className="file-input file-input-bordered file-input-xs file-input-info w-52 max-w-xs" />
                         <input className='btn btn-sm btn-primary rounded-2xl' type="submit" value="Add Post" />
 
                     </div>

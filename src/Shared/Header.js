@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 
 const Header = () => {
     const { user, logOut } = useContext(AuthContext)
     // console.log(user)
-
+    const navigate = useNavigate()
     const handleLogOut = () => {
         logOut()
-
+        navigate('/login')
     }
 
     const menuItem =

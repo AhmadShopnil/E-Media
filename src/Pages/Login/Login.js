@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 
 const Login = () => {
     const { loginWithEmail } = useContext(AuthContext)
-
+    const navigate = useNavigate();
     const handleLogin = (event) => {
         event.preventDefault();
         const form = event.target;
@@ -12,7 +13,7 @@ const Login = () => {
 
         loginWithEmail(email, password)
             .then(result => {
-
+                navigate('/')
             })
             .catch(err => console.error(err))
     }
