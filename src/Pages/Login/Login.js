@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../context/AuthProvider';
 
 const Login = () => {
-
+    const { loginWithEmail } = useContext(AuthContext)
 
     const handleLogin = (event) => {
         event.preventDefault();
@@ -9,6 +10,11 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
+        loginWithEmail(email, password)
+            .then(result => {
+
+            })
+            .catch(err => console.error(err))
     }
 
 

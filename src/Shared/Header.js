@@ -1,20 +1,43 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthProvider';
 
 const Header = () => {
+    const { user, logOut } = useContext(AuthContext)
+    // console.log(user)
+
+    const handleLogOut = () => {
+        logOut()
+
+    }
 
     const menuItem =
-        <>
+        <div className='flex gap-3'>
             <li> <Link to='/'>Home</Link></li>
-            <li> <Link to='/login'>Login</Link></li>
-            <li> <Link to='/signup'>Sign Up</Link></li>
+            <li> <Link to='/media'>Media</Link></li>
+            <li> <Link to='/message'>Message</Link></li>
+            <li> <Link to='/about'>About</Link></li>
+            {
+                user?.uid ?
+                    <>
+                        {/* <li><Link className='"btn btn-outline btn-accent' onClick={handleLogOut} to='/login'>Log Out</Link></li> */}
+                        <button onClick={handleLogOut} to='/login' className="btn btn-outline btn-primary btn-sm mt-2">Log Out</button>
 
-        </>
+                    </>
+                    :
+                    <>
+                        <li> <Link to='/login'>Login</Link></li>
+                        <li> <Link to='/signup'>Sign Up</Link></li>
+                    </>
+            }
+
+
+
+        </div>
 
 
     return (
-        <div>
-
+        <div className='mb-8'>
             <div className="navbar bg-base-100">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -34,7 +57,7 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Get started</a>
+                    {user?.displayName}
                 </div>
             </div>
         </div>
