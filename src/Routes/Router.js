@@ -5,6 +5,7 @@ import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Media from "../Pages/Media/Media";
 import Message from "../Pages/Message/Message";
+import PostDetails from "../Pages/PostDetails/PostDetails";
 import SignUp from "../Pages/SignUp/SignUp";
 
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
             {
                 path: '/message',
                 element: <Message></Message>
+            },
+            {
+                path: '/postDetails',
+                element: <PostDetails></PostDetails>
             }
         ]
     }

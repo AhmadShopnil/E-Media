@@ -1,16 +1,29 @@
 import React from 'react';
 
 const PostArea = () => {
+
+    const handleAddPost = (event) => {
+        event.preventDefault()
+        const form = event.target
+        const text = form.text.value
+        console.log(text)
+        form.reset()
+    }
+
     return (
-        <div className='my-8 '>
+        <div className='my-2 '>
             <div className='flex justify-center gap-6 '>
-                <form action="">
+                <form onSubmit={handleAddPost}>
                     <div className='flex items-center gap-4'>
-                        <textarea className="textarea textarea-info" placeholder="What's in your mind ?"></textarea>
+                        <textarea name='text' className="textarea textarea-info" placeholder="What's in your mind ?"></textarea>
                         <input type="file" className="file-input file-input-bordered file-input-xs file-input-info w-90% max-w-xs" />
+                        <input className='btn btn-sm btn-primary rounded-2xl' type="submit" value="Add Post" />
+
                     </div>
 
-                    <input className='btn btn-xs mt-3' type="submit" value="Add Post" />
+                    {/* <div className=' flex justify-center'>
+                        <input className='btn btn-xs mt-3' type="submit" value="Add Post" />
+                    </div> */}
                 </form>
 
 

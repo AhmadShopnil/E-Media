@@ -12,7 +12,7 @@ const Header = () => {
     }
 
     const menuItem =
-        <div className='flex gap-3'>
+        <div className='md:flex gap-3'>
             <li> <Link to='/'>Home</Link></li>
             <li> <Link to='/media'>Media</Link></li>
             <li> <Link to='/message'>Message</Link></li>
@@ -37,8 +37,8 @@ const Header = () => {
 
 
     return (
-        <div className='mb-8'>
-            <div className="navbar bg-base-100">
+        <div className=''>
+            <div className="navbar ">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">

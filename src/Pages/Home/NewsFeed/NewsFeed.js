@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import NewsFeedCard from './NewsFeedCard';
 
 const NewsFeed = () => {
     return (
-        <div>
+        <div className='flex justify-center'>
             <NewsFeedCard></NewsFeedCard>
+
         </div>
     );
 };
