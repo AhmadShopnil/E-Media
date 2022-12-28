@@ -22,7 +22,6 @@ const Header = () => {
                     <>
                         {/* <li><Link className='"btn btn-outline btn-accent' onClick={handleLogOut} to='/login'>Log Out</Link></li> */}
                         <button onClick={handleLogOut} to='/login' className="btn btn-outline btn-primary btn-sm mt-2">Log Out</button>
-
                     </>
                     :
                     <>
@@ -30,11 +29,7 @@ const Header = () => {
                         <li> <Link to='/signup'>Sign Up</Link></li>
                     </>
             }
-
-
-
         </div>
-
 
     return (
         <div className=''>
@@ -57,7 +52,11 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    {user?.displayName}
+                    <div className="w-12">
+                        <img className="mask mask-circle" src={user?.photoURL} />
+                    </div>
+
+                    {/* <label htmlFor="my-drawer" className="btn btn-primary drawer-button"></label> */}
                 </div>
             </div>
         </div>

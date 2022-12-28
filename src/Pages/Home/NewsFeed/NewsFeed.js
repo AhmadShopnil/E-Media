@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../context/AuthProvider';
 import NewsFeedCard from './NewsFeedCard';
 
 const NewsFeed = () => {
+    const [posts, setPosts] = useState([])
+    const { refresh } = useContext(AuthContext)
+
+    useEffect(() => {
+
+        fetch('http://localhost:5000/posts')
+            .then(res => res.json())
+            .then(data => {
+                if (data.status) {
+                    setPosts(data.data)
+
+                }
+            })
+            .catch(err => console.error(err))
+
+    }, [refresh])
+
+    // console.log(posts)
+
     return (
-        <div className='flex justify-center'>
-            <NewsFeedCard></NewsFeedCard>
+        <div className=''>
+            {
+                posts?.map(post => <NewsFeedCard key={post._id} post={post}></NewsFeedCard>)
+            }
+
 
         </div>
     );

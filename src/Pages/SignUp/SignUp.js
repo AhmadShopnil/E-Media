@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
 
 const SignUp = () => {
     const { createUser, updateUser } = useContext(AuthContext)
+    const imageHostKeyImagebb = process.env.REACT_APP_IMGBB_API_KEY
+    // const [userPhoto, setUserPhoto] = useState()
 
     const handleSignUp = (event) => {
         event.preventDefault()
@@ -10,32 +12,78 @@ const SignUp = () => {
         const form = event.target
         const name = form.name.value
         const email = form.email.value
-        // const photo = form.photo.value
+        const address = form.address.value
+        const university = form.university.value
         const password = form.password.value
 
-        const info = {
-            name, email, password
-        }
+        const image = form.UserPhoto.files[0]
 
-        createUser(email, password)
-            .then(result => {
-                handleUpdateProfile(name)
-                alert('Sign Up Success')
+
+        const formData = new FormData()
+        formData.append('image', image)
+        // console.log(formData)
+
+        const url = `https://api.imgbb.com/1/upload?key=${imageHostKeyImagebb}`
+
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(photoData => {
+                if (photoData.success) {
+                    // setUserPhoto(photoData.data.url)
+                    const userPhoto = photoData.data.url
+                    const userInfo = {
+                        name, email, password, address, university, userPhoto
+                    }
+
+                    createUser(email, password)
+                        .then(result => {
+                            handleUpdateProfile(name, userPhoto)
+                            alert('Sign Up Success')
+                        })
+                        .catch(error => console.error(error))
+
+                    const handleUpdateProfile = (userName, userPhoto) => {
+                        const profile = {
+                            displayName: userName,
+                            photoURL: userPhoto
+                        }
+                        updateUser(profile)
+                            .then(result => {
+                                handleSaveUserDatabase(userInfo)
+                            })
+                            .catch(err => console.error(err))
+                    }
+
+
+                }
             })
-            .catch(error => console.error(error))
 
-        const handleUpdateProfile = (userName) => {
-            const profile = {
-                displayName: userName
-            }
-            updateUser(profile)
-                .then(result => {
 
-                })
-                .catch(err => console.error(err))
 
-        }
 
+
+    }
+
+
+
+    const handleSaveUserDatabase = (user) => {
+
+        fetch(`http://localhost:5000/saveUser`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+
+
+            })
+            .catch(err => console.error(err))
 
     }
 
@@ -50,7 +98,6 @@ const SignUp = () => {
 
 
                         <form onSubmit={handleSignUp} className="card-body">
-
 
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
 
@@ -71,7 +118,7 @@ const SignUp = () => {
                                         <label className="label">
                                             <span className="label-text">Photo</span>
                                         </label>
-                                        <input name='photo' type="file" className="file-input file-input-bordered file-input-xs file-input-info w-90% max-w-xs" />
+                                        <input name='UserPhoto' type="file" className="file-input file-input-bordered file-input-xs file-input-info  md:w-52 max-w-xs" />
                                     </div>
                                 </div>
 
