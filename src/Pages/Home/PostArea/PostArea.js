@@ -28,13 +28,14 @@ const PostArea = () => {
                 if (photoData.success) {
                     const post = {
                         userEmail: user?.email,
+                        userName: user?.displayName,
                         userPhoto: user?.photoURL,
                         text,
                         photo: photoData.data.url,
                         time
                     }
 
-                    fetch(`http://localhost:5000/savePost`, {
+                    fetch(`https://e-media-server.vercel.app/savePost`, {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json'

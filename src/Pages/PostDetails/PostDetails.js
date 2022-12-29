@@ -1,45 +1,54 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import AddComment from '../../Component/AddComment/AddComment';
+import { AuthContext } from '../../context/AuthProvider';
 
 const PostDetails = () => {
+    const { refresh } = useContext(AuthContext);
+    const data = useLoaderData();
+    const postDetails = data.data;
+    const [comments, setComments] = useState([])
+    // const [refresh, setRefresh] = useState(false);
 
-    const comments = [
-        {
-            userName: 'Shopnil',
-            text: 'Wow asd d asd  asd dad sad sad asd asds fa sadsa sd sd'
-        },
-        {
-            userName: 'Ahamad',
-            text: 'Good post keep it up'
-        },
-        {
-            userName: 'Dip',
-            text: 'Nice'
-        },
-    ]
+    useEffect(() => {
+        fetch(`https://e-media-server.vercel.app/comments/${postDetails?._id}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status) {
+                    setComments(data.data)
+                }
+            })
+
+    }, [refresh])
+
+
+
+
 
     return (
-        <div className='mx-20'>
+        <div className='mx-5 md:mx-20'>
             <div className='w-full'>
-                <img className='w-3/4 mx-auto h-96 ' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLLUBkJgwdSnMEx7TGzJ5p_2kz8JxCGv1bW3EKuBCa2w&s" alt="" />
+                <img className='md:w-3/4 mx-auto h-96 ' src={postDetails?.photo} alt="" />
                 <div>
-                    <h3 className=' font-bold my-4'>Author : <span className='text-2xl font-light'>Shopnil</span></h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis voluptatibus nisi expedita eum autem dignissimos cupiditate saepe modi quidem sequi?Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis voluptatibus nisi expedita eum autem dignissimos cupiditate saepe modi quidem sequi?Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis voluptatibus nisi expedita eum autem dignissimos cupiditate saepe modi quidem sequi?</p>
+                    <p>{postDetails?.text}</p>
+                    <h3 className='text-sm font-bold mt-4'>Author : <span className=' font-light'>{postDetails?.userName}</span></h3>
+                    <h3 className='text-sm font-bold mb-4'>Post Date: <span className=' font-light'>{postDetails?.time}</span></h3>
+
                 </div>
             </div>
 
 
             <div className='my-8'>
-                <AddComment></AddComment>
+                <AddComment postId={postDetails?._id}></AddComment>
                 <h2 className='font-semibold text-xl mb-4'>All Comments--</h2>
                 <div className='flex flex-col gap-4 md:ml-10 '>
                     {
-                        comments.map(comment => {
+                        comments?.map(comment => {
                             return <div className='flex gap-1'>
-                                <img className=" w-10 mask mask-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM1cDnT1Q5ZrkfLfxiSgFvC2ZsjpngynJGvg&usqp=CAU" />
-                                <div className='bg-blue-50 p-3 rounded-xl'>
+                                <img className=" w-12 mask mask-circle" src={comment?.userPhoto} />
+                                <div className='bg-blue-50 px-6 py- rounded-xl'>
                                     <h4 className='font-semibold'>{comment?.userName}</h4>
-                                    <small>{comment?.text}</small>
+                                    <small>{comment?.comment}</small>
 
                                 </div>
                             </div>

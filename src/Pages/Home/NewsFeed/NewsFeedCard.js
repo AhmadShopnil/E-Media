@@ -7,14 +7,16 @@ import AddComment from '../../../Component/AddComment/AddComment';
 
 const NewsFeedCard = ({ post }) => {
     const { user } = useContext(AuthContext);
-
+    const author = post.userName || post.userEmail
     return (
         <div className='p-6 mx-2 mb-6 shadow-2xl bg-base-100 rounded-lg'>
             <div className='flex gap-3 items-center mb-3'>
                 <div className="w-10">
                     <img className="mask mask-circle" src={post.userPhoto} />
                 </div>
-                <h4 className='font-bold '>{post.userEmail}</h4>
+                <h4 className='font-bold '>
+                    {author}
+                </h4>
             </div>
             <img className='w-full' src={post.photo} alt="" />
             <div>
@@ -22,7 +24,7 @@ const NewsFeedCard = ({ post }) => {
 
 
                 <div className=''>
-                    <Link to='/postDetails' className='btn btn-outline btn-info btn-sm mx-auto'>See More</Link>
+                    <Link to={`/postDetails/${post._id}`} className='btn btn-outline btn-info btn-sm mx-auto'>See More</Link>
                 </div>
 
                 <div className='mt-3 flex gap-2'>
@@ -31,7 +33,7 @@ const NewsFeedCard = ({ post }) => {
                     <small>99</small>
                 </div>
             </div>
-            <AddComment></AddComment>
+            <AddComment postId={post._id}></AddComment>
         </div>
     );
 };

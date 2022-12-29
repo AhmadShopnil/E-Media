@@ -1,27 +1,66 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../context/AuthProvider';
+import EditAboutModal from './EditAboutModal';
 
 const About = () => {
+    const { user } = useContext(AuthContext);
+    const [userDetails, setUserDetails] = useState({})
+    const [reload, setReload] = useState(false)
+    const [modal, setModal] = useState(true)
 
-    const handleEditProfile = (event) => {
-        event.preventDeafault()
-        const form = event.target;
-        const name = event.name.value
-        const address = event.address.value
-        const university = event.university.value
-    }
+    useEffect(() => {
+        fetch(`https://e-media-server.vercel.app/user/${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status) {
+                    setUserDetails(data.data)
+                }
+            })
+            .catch(err => console.error(err))
+    }, [reload])
 
+
+    // const handleOpenMOdal = () => {
+    //     setModal(true)
+    // }
+    // const handleCloseMOdal = () => {
+    //     setModal(false)
+    // }
 
 
     return (
-        <div className=' w-full'>
-            <div className='border-2 w-1/2 mx-auto p-10'>
-                <img className="mask mask-circle" src="https://placeimg.com/160/160/arch" />
-                <form onSubmit={handleEditProfile} className='grid grid-cols-1 gap-4 my-4'>
-                    <input name='name' type="text" defaultValue={'Shopnil'} placeholder="Name" className="input input-bordered input-primary w-full max-w-xs" />
-                    <input name='address' type="text" defaultValue={'Tangail'} placeholder="Adress" className="input input-bordered input-primary w-full max-w-xs" />
-                    <input name='university' type="text" defaultValue={'Govt Saadat College'} placeholder="University" className="input input-bordered input-primary w-full max-w-xs" />
-                    <input className='btn ' type="submit" value="Save Changes" />
-                </form>
+        <div className=' w-full min-h-screen'>
+            <div className='border-2 md:w-1/2 mx-auto p-6'>
+                <div className='flex justify-between items-center'> <img className=" w-28 mask mask-circle" src={userDetails?.userPhoto} />
+                    <label htmlFor="my-modal-3" className="btn btn-outline btn-primary btn-sm">Edit Profile</label>
+                </div>
+
+                <div className="overflow-x-auto ">
+                    <table className="table w-full">
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>{userDetails?.name}
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>University</td>
+                                <td>{userDetails?.university}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Address</td>
+                                <td>{userDetails?.address}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                {
+                    modal && <EditAboutModal key={userDetails?._id} userDetails={userDetails} reload={reload} setReload={setReload}></EditAboutModal>
+                }
             </div>
         </div>
     );

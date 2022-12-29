@@ -38,11 +38,13 @@ const router = createBrowserRouter([
             },
             {
                 path: '/message',
-                element: <Message></Message>
+                element: <Message></Message>,
+
             },
             {
-                path: '/postDetails',
-                element: <PostDetails></PostDetails>
+                path: '/postDetails/:id',
+                element: <PostDetails></PostDetails>,
+                loader: ({ params }) => fetch(`https://e-media-server.vercel.app/postDetails/${params.id}`)
             }
         ]
     }

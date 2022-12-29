@@ -9,7 +9,7 @@ const NewsFeed = () => {
 
     useEffect(() => {
 
-        fetch('http://localhost:5000/posts')
+        fetch('https://e-media-server.vercel.app/posts')
             .then(res => res.json())
             .then(data => {
                 if (data.status) {

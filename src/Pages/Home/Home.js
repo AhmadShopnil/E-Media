@@ -5,7 +5,7 @@ import PostArea from './PostArea/PostArea';
 
 const Home = () => {
     return (
-        <div className='flex'>
+        <div className='flex min-h-screen'>
 
             <div className='mb-8 grid grid-cols-4 '>
                 {/* <div className='  md:hidden'>
