@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MediaCard from '../../Component/MediaCard/MediaCard';
+import { AuthContext } from '../../context/AuthProvider';
 import NewsFeedCard from '../Home/NewsFeed/NewsFeedCard';
 
 const Media = () => {
     const [posts, setPosts] = useState([])
+    const { refresh } = useContext(AuthContext)
 
     useEffect(() => {
-
         fetch('https://e-media-server.vercel.app/posts')
             .then(res => res.json())
             .then(data => {
@@ -17,11 +18,11 @@ const Media = () => {
             })
             .catch(err => console.error(err))
 
-    }, [])
+    }, [refresh])
 
 
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 min-h-screen'>
+        <div className='grid grid-cols-1  min-h-screen'>
             {/* <NewsFeedCard></NewsFeedCard> */}
 
             {

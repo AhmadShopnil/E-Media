@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BeakerIcon, HeartIcon, ShareIcon } from '@heroicons/react/24/solid'
 import { AuthContext } from '../../context/AuthProvider';
 
-const AddComment = ({ postId }) => {
+const AddComment = ({ postId, reactCount }) => {
     const { user, refresh, setRefresh } = useContext(AuthContext);
     const time = new Date().toISOString();
-
+    const [reaction, setReaction] = useState(false);
 
     const handleAddComment = (event) => {
         event.preventDefault()
@@ -37,14 +37,83 @@ const AddComment = ({ postId }) => {
             .catch(err => console.error(err))
     }
 
+    // For post React
+    const reactInfo = {
+        userEmail: user?.email,
+        userName: user?.displayName,
+        time,
+        postId,
+        react: 'love'
+    }
 
+    const handleReact = () => {
+
+        fetch(`https://e-media-server.vercel.app/addReact`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(reactInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status) {
+                    setReaction(true)
+
+                }
+            })
+            .catch(err => console.error(err))
+
+
+
+        // increase reaction
+        const updatedReactInfo = {
+            react: reactCount + 1
+        }
+        console.log(reactCount)
+
+        fetch(`https://e-media-server.vercel.app/updateReaction/${postId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedReactInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status) {
+                    setRefresh(!refresh)
+
+                }
+            })
+            .catch(error => {
+
+            })
+
+
+    }
+
+
+    //    useEffect(()=>{
+
+    //    },[])
 
 
     return (
         <div className=" mb-2 flex gap-2 justify-center items-center">
 
             <button>
-                <HeartIcon className=" h-8 w-8 text-gray-300" />
+
+                {
+                    reaction === false ?
+                        <>
+                            <HeartIcon onClick={handleReact} className=" h-8 w-8 text-gray-300" />
+                        </>
+                        :
+                        <>
+                            <HeartIcon className=" h-6 w-6 text-red-500" />
+                        </>
+                }
+
+
             </button>
 
             <form onSubmit={handleAddComment} className='flex gap-1 '>

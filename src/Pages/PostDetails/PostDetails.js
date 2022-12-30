@@ -46,7 +46,7 @@ const PostDetails = () => {
                         comments?.map(comment => {
                             return <div className='flex gap-1'>
                                 <img className=" w-12 mask mask-circle" src={comment?.userPhoto} />
-                                <div className='bg-blue-50 px-6 py- rounded-xl'>
+                                <div className='bg-blue-50 pl-3 pr-6 py- rounded-xl'>
                                     <h4 className='font-semibold'>{comment?.userName}</h4>
                                     <small>{comment?.comment}</small>
 

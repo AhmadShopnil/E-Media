@@ -24,16 +24,15 @@ const NewsFeedCard = ({ post }) => {
 
 
                 <div className=''>
-                    <Link to={`/postDetails/${post._id}`} className='btn btn-outline btn-info btn-sm mx-auto'>See More</Link>
+                    <Link to={`/postDetails/${post._id}`} className='btn btn-outline btn-info btn-xs mx-auto'>See More</Link>
                 </div>
 
                 <div className='mt-3 flex gap-2'>
-
                     <HeartIcon className=" h-6 w-6 text-red-500" />
-                    <small>99</small>
+                    <small>{post?.react}</small>
                 </div>
             </div>
-            <AddComment postId={post._id}></AddComment>
+            <AddComment postId={post?._id} reactCount={post?.react}></AddComment>
         </div>
     );
 };

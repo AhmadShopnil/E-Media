@@ -32,6 +32,7 @@ const PostArea = () => {
                         userPhoto: user?.photoURL,
                         text,
                         photo: photoData.data.url,
+                        react: 0,
                         time
                     }
 

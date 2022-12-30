@@ -15,7 +15,7 @@ const EditAboutModal = ({ userDetails, reload, setReload }) => {
             name, address, university, userEmail: userDetails?.email
         }
 
-        console.log(updatedInfo)
+
 
         fetch(`https://e-media-server.vercel.app/updateUserInfo/${userDetails._id}`, {
             method: 'PUT',

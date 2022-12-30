@@ -5,15 +5,15 @@ import NewsFeedCard from './NewsFeedCard';
 
 const NewsFeed = () => {
     const [posts, setPosts] = useState([])
-    const { refresh } = useContext(AuthContext)
+    const { user, refresh } = useContext(AuthContext)
 
     useEffect(() => {
 
-        fetch('https://e-media-server.vercel.app/posts')
+        fetch(`https://e-media-server.vercel.app/HomePagePost`)
             .then(res => res.json())
             .then(data => {
                 if (data.status) {
-                    setPosts(data.data)
+                    setPosts(data.data.slice(0, 3))
 
                 }
             })
