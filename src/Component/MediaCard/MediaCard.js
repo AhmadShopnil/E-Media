@@ -25,7 +25,7 @@ const MediaCard = ({ post }) => {
                     <p>{post.text}</p>
                     <Link to={`/postDetails/${post?._id}`} className='btn btn-outline btn-info btn-sm'>Details</Link>
                 </div>
-                <div className='mb-4'>
+                <div className='mb-4 px-6'>
                     <AddComment postId={post?._id} reactCount={post?.react} reactedUsers={post.reactedUsers}></AddComment>
                 </div>
             </div>
