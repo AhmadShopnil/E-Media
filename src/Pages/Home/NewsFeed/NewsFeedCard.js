@@ -20,10 +20,10 @@ const NewsFeedCard = ({ post }) => {
                 </h4>
             </div>
             <img className='w-full' src={post.photo} alt="" />
-            <div className='mt-3 flex gap-2'>
+            {/* <div className='mt-3 flex gap-2'>
                 <HeartIcon className=" h-6 w-6 text-red-500" />
                 <small>{post?.react}</small>
-            </div>
+            </div> */}
             <div>
                 <p className='my-4'>{post.text}</p>
 
@@ -34,7 +34,7 @@ const NewsFeedCard = ({ post }) => {
 
 
             </div>
-            <AddComment postId={post?._id} reactCount={post?.react}></AddComment>
+            <AddComment postId={post?._id} reactCount={post?.react} reactedUsers={post.reactedUsers}></AddComment>
         </div>
     );
 };

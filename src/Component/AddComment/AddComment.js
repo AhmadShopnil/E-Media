@@ -2,10 +2,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import { BeakerIcon, HeartIcon, ShareIcon } from '@heroicons/react/24/solid'
 import { AuthContext } from '../../context/AuthProvider';
 
-const AddComment = ({ postId, reactCount }) => {
+const AddComment = ({ postId, reactCount, reactedUsers }) => {
     const { user, refresh, setRefresh } = useContext(AuthContext);
     const time = new Date().toISOString();
     const [reaction, setReaction] = useState(false);
+
+    useEffect(() => {
+
+        const result = reactedUsers?.find((a) => a === user?.email)
+        if (result === user?.email) {
+            setReaction(true)
+        }
+
+
+    }, [])
 
     const handleAddComment = (event) => {
         event.preventDefault()
@@ -68,9 +78,9 @@ const AddComment = ({ postId, reactCount }) => {
 
         // increase reaction
         const updatedReactInfo = {
-            react: reactCount + 1
+            react: reactCount + 1,
+            userEmail: user?.email,
         }
-        console.log(reactCount)
 
         fetch(`https://e-media-server.vercel.app/updateReaction/${postId}`, {
             method: 'PUT',
@@ -81,26 +91,42 @@ const AddComment = ({ postId, reactCount }) => {
             .then(data => {
                 if (data.status) {
                     setRefresh(!refresh)
+                }
+            })
+            .catch(error => {
+            })
 
+    }
+
+
+    const handleRemoveReact = () => {
+        setReaction(false)
+        const userInfo = {
+            userEmail: user?.email,
+        }
+
+        fetch(`https://e-media-server.vercel.app/removeReaction/${postId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status) {
+                    setRefresh(!refresh)
                 }
             })
             .catch(error => {
 
             })
 
-
     }
-
-
-    //    useEffect(()=>{
-
-    //    },[])
 
 
     return (
         <div className=" mb-2 flex gap-2 justify-center items-center">
-
-            <button>
+            <span>{reactCount}</span>
+            <button className=''>
 
                 {
                     reaction === false ?
@@ -109,7 +135,7 @@ const AddComment = ({ postId, reactCount }) => {
                         </>
                         :
                         <>
-                            <HeartIcon className=" h-6 w-6 text-red-500" />
+                            <HeartIcon onClick={handleRemoveReact} className=" h-8 w-8 text-red-500" />
                         </>
                 }
 

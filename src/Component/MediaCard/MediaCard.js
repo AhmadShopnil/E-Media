@@ -12,10 +12,10 @@ const MediaCard = ({ post }) => {
                 <figure><img className='w-full h-96' src={post?.photo} alt="Shoes" /></figure>
                 <div className="card-body">
                     <div className="card-actions justify-end">
-                        <div className="flex justify-center ">
+                        {/* <div className="flex justify-center ">
                             <HeartIcon className=" h-6 w-6 text-red-500" />
                             <span className='mx-2'>{post?.react}</span>
-                        </div>
+                        </div> */}
 
                     </div>
                     <h2 className="card-title">
@@ -26,7 +26,7 @@ const MediaCard = ({ post }) => {
                     <Link to={`/postDetails/${post?._id}`} className='btn btn-outline btn-info btn-sm'>Details</Link>
                 </div>
                 <div className='mb-4'>
-                    <AddComment postId={post?._id} reactCount={post?.react}></AddComment>
+                    <AddComment postId={post?._id} reactCount={post?.react} reactedUsers={post.reactedUsers}></AddComment>
                 </div>
             </div>
 
