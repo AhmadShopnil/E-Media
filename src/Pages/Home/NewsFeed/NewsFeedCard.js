@@ -28,7 +28,7 @@ const NewsFeedCard = ({ post }) => {
                 <p className='my-4'>{post.text}</p>
 
 
-                <div className=''>
+                <div className='mb-6'>
                     <Link to={`/postDetails/${post._id}`} className='btn btn-outline btn-info btn-xs mx-auto'>See More</Link>
                 </div>
 
