@@ -1,10 +1,16 @@
-import React, { useContext } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
+import GoogleLogin from '../../Shared/GoogleLogin';
 
 const Login = () => {
     const { loginWithEmail } = useContext(AuthContext)
+    const [error, setError] = useState(null)
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/'
+
+
     const handleLogin = (event) => {
         event.preventDefault();
         const form = event.target;
@@ -13,9 +19,12 @@ const Login = () => {
 
         loginWithEmail(email, password)
             .then(result => {
-                navigate('/')
+                setError(null)
+                navigate(from, { replace: true })
             })
-            .catch(err => console.error(err))
+            .catch(error => {
+                setError(error.message)
+            })
     }
 
 
@@ -25,6 +34,10 @@ const Login = () => {
             <div className="flex justify-center min-h-screen ">
                 <div className="">
                     <div className=" w-full max-w-md shadow-2xl bg-base-100">
+                        <h2 className=' p-4 text-center text-2xl font-bold'>Login</h2>
+                        {
+                            error && <p className='text-red-600 m-3'>{error}</p>
+                        }
                         <form onSubmit={handleLogin} className="card-body">
                             <div className="form-control">
                                 <label className="label">
@@ -42,12 +55,12 @@ const Login = () => {
                                 </label>
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary">Login</button>
+                                <button className="btn btn-accent btn-sm">Login</button>
                             </div>
                         </form>
-
-
+                        <GoogleLogin></GoogleLogin>
                     </div>
+
                 </div>
             </div>
         </div>

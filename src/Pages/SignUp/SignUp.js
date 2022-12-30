@@ -1,15 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
+import GoogleLogin from '../../Shared/GoogleLogin';
 
 const SignUp = () => {
     const { createUser, updateUser } = useContext(AuthContext)
+    const [error, setError] = useState(null)
+
     const imageHostKeyImagebb = process.env.REACT_APP_IMGBB_API_KEY
     // const [userPhoto, setUserPhoto] = useState()
     const navigate = useNavigate()
     const handleSignUp = (event) => {
         event.preventDefault()
-
         const form = event.target
         const name = form.name.value
         const email = form.email.value
@@ -42,9 +44,12 @@ const SignUp = () => {
                     createUser(email, password)
                         .then(result => {
                             handleUpdateProfile(name, userPhoto)
+                            setError(null)
                             alert('Sign Up Success')
                         })
-                        .catch(error => console.error(error))
+                        .catch(error => {
+                            setError(error.message)
+                        })
 
                     const handleUpdateProfile = (userName, userPhoto) => {
                         const profile = {
@@ -83,6 +88,10 @@ const SignUp = () => {
             <div className=" min-h-screen flex justify-center">
                 <div className="">
                     <div className=" w-full max-w-lg shadow-2xl bg-base-100">
+                        <h2 className=' pt-4 text-center text-2xl font-bold'>Sign Up</h2>
+                        {
+                            error && <p className='text-red-600 m-3'>{error}</p>
+                        }
                         <form onSubmit={handleSignUp} className="card-body">
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                                 <div>
@@ -133,11 +142,11 @@ const SignUp = () => {
 
 
                             <div className="form-control mt-6">
-                                <input className='btn btn-sm mt-3' type="submit" value="Sign Up" />
+                                <input className='btn btn-accent btn-sm mt-3' type="submit" value="Sign Up" />
                             </div>
                         </form>
 
-
+                        <GoogleLogin></GoogleLogin>
                     </div>
                 </div>
             </div>

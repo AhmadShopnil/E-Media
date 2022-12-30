@@ -16,17 +16,19 @@ const Header = () => {
             <li> <Link to='/'>Home</Link></li>
             <li> <Link to='/media'>Media</Link></li>
             <li> <Link to='/message'>Message</Link></li>
-            <li> <Link to='/about'>About</Link></li>
+
             {
                 user?.uid ?
                     <>
                         {/* <li><Link className='"btn btn-outline btn-accent' onClick={handleLogOut} to='/login'>Log Out</Link></li> */}
+                        <li> <Link to='/about'>About</Link></li>
                         <button onClick={handleLogOut} to='/login' className="btn btn-outline btn-primary btn-sm mt-2">Log Out</button>
+
                     </>
                     :
                     <>
-                        <li> <Link to='/login'>Login</Link></li>
-                        <li> <Link to='/signup'>Sign Up</Link></li>
+
+                        <Link className="btn btn-outline btn-primary btn-sm mt-2" to='/signup'>Sign Up</Link>
                     </>
             }
         </div>
@@ -52,13 +54,21 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <div className="w-12">
-                        <img className="mask mask-circle" src={user?.photoURL} />
+                    <div className="w-12 mr-6">
+                        {
+                            user?.uid ?
+                                <>
+                                    <Link to='/about'> <img className="mask mask-circle" src={user?.photoURL} /></Link>
+                                </>
+                                :
+                                <>
+                                    <Link className="btn btn-outline btn-primary btn-sm mt-2 " to='/login'>Login</Link>
+                                </>
+                        }
                     </div>
-
-                    {/* <label htmlFor="my-drawer" className="btn btn-primary drawer-button"></label> */}
                 </div>
             </div>
+            <div className="divider"></div>
         </div>
     );
 };

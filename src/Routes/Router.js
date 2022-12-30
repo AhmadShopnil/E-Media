@@ -7,6 +7,7 @@ import Media from "../Pages/Media/Media";
 import Message from "../Pages/Message/Message";
 import PostDetails from "../Pages/PostDetails/PostDetails";
 import SignUp from "../Pages/SignUp/SignUp";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
 
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/about',
-                element: <About></About>
+                element: <PrivateRoutes><About></About></PrivateRoutes>
             },
             {
                 path: '/message',
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/postDetails/:id',
-                element: <PostDetails></PostDetails>,
+                element: <PrivateRoutes><PostDetails></PostDetails></PrivateRoutes>,
                 loader: ({ params }) => fetch(`https://e-media-server.vercel.app/postDetails/${params.id}`)
             }
         ]

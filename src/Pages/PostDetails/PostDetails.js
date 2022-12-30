@@ -1,3 +1,4 @@
+import { HeartIcon } from '@heroicons/react/24/solid';
 import React, { useContext, useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import AddComment from '../../Component/AddComment/AddComment';
@@ -28,7 +29,11 @@ const PostDetails = () => {
     return (
         <div className='mx-5 md:mx-20'>
             <div className='w-full'>
-                <img className='md:w-3/4 mx-auto h-96 ' src={postDetails?.photo} alt="" />
+                <img className='w-full mx-auto h-96 ' src={postDetails?.photo} alt="" />
+                <div className='mt-3 mb-6 flex gap-2'>
+                    <HeartIcon className=" h-6 w-6 text-red-500" />
+                    <small>{postDetails?.react}</small>
+                </div>
                 <div>
                     <p>{postDetails?.text}</p>
                     <h3 className='text-sm font-bold mt-4'>Author : <span className=' font-light'>{postDetails?.userName}</span></h3>

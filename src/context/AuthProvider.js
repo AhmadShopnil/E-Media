@@ -4,14 +4,23 @@ import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStat
 
 export const AuthContext = createContext()
 const auth = getAuth(app)
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState()
     const [refresh, setRefresh] = useState(false)
+    const [loading, setLoading] = useState(true)
+
     // Create user by email and password
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
+
+    // sign in with google
+    const signInWithGoogle = () => {
+        return signInWithPopup(auth, googleProvider)
+    }
+
 
     // login with email password
     const loginWithEmail = (email, password) => {
@@ -22,6 +31,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
+            setLoading(false)
         })
         return () => unsubscribe()
 
@@ -48,6 +58,9 @@ const AuthProvider = ({ children }) => {
     const authInfo = {
         user,
         refresh,
+        loading,
+        signInWithGoogle,
+        setLoading,
         setRefresh,
         createUser,
         loginWithEmail,
