@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 import GoogleLogin from '../../Shared/GoogleLogin';
 
@@ -51,7 +51,8 @@ const Login = () => {
                                 </label>
                                 <input name='password' type="text" placeholder="password" className="input input-bordered" />
                                 <label className="label">
-                                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                                    <p>Don't have an account? <Link to='/signup' className='text-blue-500'>Register</Link></p>
+                                    {/* <a href="#" className="label-text-alt link link-hover">Forgot password?</a> */}
                                 </label>
                             </div>
                             <div className="form-control mt-6">
